@@ -6,6 +6,34 @@
 int main(){
   int op;
   do{
+    printf("+--------------------------------------------------------------+\n");
+    printf("| %-60s |\n","        SISTEMA DA EMPRESA ");
+    printf("| %-60s |\n", "");
+    printf("| %-60s |\n", " 1 - Inserir uma nova venda");
+    printf("| %-60s |\n", " 2 - Listar todas as vendas");
+    printf("| %-60s |\n", " 3 - Buscar as vendas de um determidado vendedor");
+    printf("| %-60s |\n", " 4 - Listar vendas acima ou abaixo de um valor definido");
+    printf("| %-60s |\n", " 5 - Exibir estatisticas");
+    printf("| %-60s |\n", " 6 - Remocao de uma Venda");
+    printf("| %-60s |\n", " 7 - Sair");
+    printf("+--------------------------------------------------------------+\n");
+    printf("Escolha sua opcao: ");
+    scanf("%d", &op);
 
-  }while(op != 0);
+    switch(op){
+      case 1:
+      break;
+      case 2:
+      break;
+      case 3:
+      break;
+      case 4:
+      break;
+      case 5:
+      break;
+      case 6:
+      case 7:
+      break;
+    }
+  }while(op != 7);
 }
