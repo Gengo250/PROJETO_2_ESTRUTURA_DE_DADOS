@@ -19,7 +19,7 @@ typedef struct data{
 typedef struct Sistema{
   char Cliente[50];
   int ID;
-  int valor_transacao;
+  float valor_transacao;
   int matricula_do_vendedor;
   char Vendedor[50];
   Data data_transacao;
