@@ -6,7 +6,7 @@
 int main(){
   int op;
   Arv *a;
-  a->raiz==NULL;
+  a=inicializaarv(a);
   do{
     printf("+--------------------------------------------------------------+\n");
     printf("| %-60s |\n","        SISTEMA DA EMPRESA ");

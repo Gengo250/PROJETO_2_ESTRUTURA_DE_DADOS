@@ -27,19 +27,35 @@ typedef struct arv{
 
 
 
-Sistema cadastro(){
-  Sistema pessoa;
-  printf("Digite o nome do Vendedor: ");
-  scanf("%49s", &pessoa.Vendedor);
+Sistema cadastro() {
+    Sistema pessoa;
 
-  printf("Digite o nome do Cliente atendido: ");
-  scanf("%49s", &pessoa.Cliente);
+    printf("Digite o nome do Vendedor: ");
+    scanf("%49s", pessoa.Vendedor);     // sem &
 
-  // fazer depois a matricula do vendedor e o ID;
+    printf("Digite o nome do Cliente atendido: ");
+    scanf("%49s", pessoa.Cliente);      // sem &
 
-  printf("Digite o valor de transição da venda: ");
-  scanf("%.2f", &pessoa.valor_transacao);
+    printf("Digite o valor de transicao da venda: ");
+    scanf("%f", &pessoa.valor_transacao);  // "%f" em scanf
 
+    printf("Digite o ID da venda: ");
+    scanf("%d", &pessoa.ID);
+
+    return pessoa;   
+}
+
+
+Arv *inicializaarv(Arv*a){
+      a = (Arv*) malloc(sizeof(Arv));  
+    if (a == NULL) {
+       printf("Erro de memoria\n"); 
+      return a;
+    }
+    else{
+    a->raiz = NULL;
+    return a;
+    }
 }
 
 NoArv* aux_insere(NoArv *no, Sistema s){
@@ -49,7 +65,7 @@ NoArv* aux_insere(NoArv *no, Sistema s){
   novo->sistema=s;
   novo->direita=NULL;
   novo->esquerda=NULL;
-  if(no=NULL){
+  if(no==NULL){
     return novo;
   }
   else{
