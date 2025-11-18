@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <biblioteca.h>
+#include "biblioteca.h"
 
 
 int main(){
   int op;
+  Arv *a;
+  a->raiz==NULL;
   do{
     printf("+--------------------------------------------------------------+\n");
     printf("| %-60s |\n","        SISTEMA DA EMPRESA ");
@@ -21,7 +23,7 @@ int main(){
     scanf("%d", &op);
 
     switch(op){
-      case 1:
+      case 1: insere_arv(a);
       break;
       case 2:
       break;
