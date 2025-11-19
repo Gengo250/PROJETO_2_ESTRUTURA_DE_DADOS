@@ -46,16 +46,15 @@ Sistema cadastro() {
 }
 
 
-Arv *inicializaarv(Arv*a){
-      a = (Arv*) malloc(sizeof(Arv));  
+Arv *inicializaarv(){
+     Arv *a = (Arv*) malloc(sizeof(Arv));  
     if (a == NULL) {
        printf("Erro de memoria\n"); 
       return a;
     }
-    else{
     a->raiz = NULL;
     return a;
-    }
+    
 }
 
 NoArv* aux_insere(NoArv *no, Sistema s){
@@ -105,12 +104,9 @@ NoArv* aux_insere(NoArv *no, Sistema s){
   return no;
 }
 
-
-
 void insere_arv(Arv *a){
   Sistema sis = cadastro();
-a->raiz=aux_insere(a->raiz, sis);
-
+  a->raiz=aux_insere(a->raiz, sis);
 }
 
 

@@ -5,8 +5,8 @@
 
 int main(){
   int op;
-  Arv *a;
-  a=inicializaarv(a);
+  Arv *a = inicializaarv();
+  
   do{
     printf("+--------------------------------------------------------------+\n");
     printf("| %-60s |\n","        SISTEMA DA EMPRESA ");
@@ -23,7 +23,8 @@ int main(){
     scanf("%d", &op);
 
     switch(op){
-      case 1: insere_arv(a);
+      case 1:
+        insere_arv(a);
       break;
       case 2:
       break;
