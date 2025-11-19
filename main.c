@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "biblioteca.h"
 
 
 int main(){
+  srand(time(NULL)); 
   int op;
   Arv *a = inicializaarv();
   
@@ -27,6 +29,7 @@ int main(){
         insere_arv(a);
       break;
       case 2:
+        imprime_arv(a);
       break;
       case 3:
       break;
@@ -36,6 +39,8 @@ int main(){
       break;
       case 6:
       case 7:
+        printf("Saindo do Sistema ...");
+        LiberaArvore(a);
       break;
     }
   }while(op != 7);
