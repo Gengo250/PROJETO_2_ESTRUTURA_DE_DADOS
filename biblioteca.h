@@ -36,7 +36,7 @@ Sistema cadastro() {
     scanf(" %49s", pessoa.Cliente);
 
     printf("Digite o valor de transicao da venda: ");
-    scanf("%f", &pessoa.valor_transacao); 
+    scanf("%.2f", &pessoa.valor_transacao); 
 
     pessoa.ID = 1000 + rand() % 9000;
     printf("ID da venda gerado: %d\n", pessoa.ID);
@@ -136,6 +136,7 @@ void insere_arv(Arv *a){
   Sistema sis = cadastro();
   a->raiz=aux_insere(a->raiz, sis);
 }
+
 void imprime_sistema(NoArv *aux);
 
 void imprime_arv(Arv *a){
