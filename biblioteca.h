@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h> 
 
 typedef struct data
 {
@@ -215,7 +216,7 @@ void BuscarVendas(Arv *a, int op){
       printf("Digite a matricula do Vendedor: ");
       scanf("%d", &matricula);
       aux2 = busca_pela_matricula(a->raiz, matricula);
-      imprime_vendas_vendedor(aux);
+      imprime_vendas_vendedor(aux2);
     break;
   }
 }
@@ -223,37 +224,37 @@ NoArv *busca_pelo_nome(NoArv *raiz, char nome_vendedor[49]){
   if(raiz == NULL){
     return NULL;
   }
-  if(nome_vendedor == raiz->sistema.Vendedor){
+  if(strcmp(nome_vendedor, raiz->sistema.Vendedor) == 0){
     return raiz;
   }
-  else {
-    raiz->esquerda = busca_pelo_nome(raiz->esquerda, nome_vendedor);
-    raiz->direita = busca_pelo_nome(raiz->direita, nome_vendedor);
-    return raiz;
-  }
+
+  NoArv *p = busca_pelo_nome(raiz->esquerda, nome_vendedor);
+    if (p != NULL) {
+        return p;
+    }
+    return busca_pelo_nome(raiz->direita, nome_vendedor);
 }
 NoArv *busca_pela_matricula(NoArv *raiz, int matricula){
   if(raiz == NULL){
     return NULL;
   }
-  if(matricula == raiz->sistema.ID){
+  if(matricula == raiz->sistema.matricula_do_vendedor){
     return raiz;
   }
-  else {
-    if(matricula < raiz->sistema.ID){
-      return busca_pela_matricula(raiz->esquerda, matricula);
-    } else {
-      return busca_pela_matricula(raiz->direita, matricula);
+  NoArv *p = busca_pela_matricula(raiz->esquerda, matricula);
+    if (p != NULL) {
+        return p;
     }
-  }
+
+    return busca_pela_matricula(raiz->direita, matricula);
 }
 void imprime_vendas_vendedor(NoArv *raiz){
   if(raiz != NULL){
-    imprime_vendas_vendedor(raiz->esquerda);
      printf("ID: %d | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n"
             , raiz->sistema.ID, raiz->sistema.Cliente, raiz->sistema.data_transacao
             , raiz->sistema.valor_transacao);
-    imprime_vendas_vendedor(raiz->direita);
+  } else {
+    printf("Nenhuma venda encontrada.\n");
   }
   
 }
