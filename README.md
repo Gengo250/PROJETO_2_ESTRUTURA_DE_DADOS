@@ -161,9 +161,13 @@ Projeto desenvolvido em time, com foco em colaboração, divisão de responsabil
 **Integrantes:**
 
 [![GitHub - Gengo250](https://img.shields.io/badge/GitHub-Gengo250-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Gengo250)
+
 [![GitHub - LuccasZibordi](https://img.shields.io/badge/GitHub-LuccasZibordi-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/LuccasZibordi)
+
 [![GitHub - JoaoVitorBomboGuimaraes](https://img.shields.io/badge/GitHub-JoaoVitorBomboGuimaraes-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JoaoVitorBomboGuimaraes)
-[![GitHub - GuiMasca](https://img.shields.io/badge/GitHub-GuiMasca-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/GuiMasca)
+
+[![GitHub - GuiMasca](https://img.shields.io/badge/GitHub-GuiMasca-181717?style=for-the-badge&logo=github&logoColor=white)](https://gith)
+
 
 
 Cada integrante contribuiu em diferentes etapas, como:
