@@ -292,8 +292,9 @@ void ListaVendas(Arv *a, int valor)
     printf("Sistema vazio! Erro");
   }
   int op;
-  printf("Gostaria de listar vendas acima (1) ou abaixo (2) do valor inserido?\n");
-  scanf("%d", &op);
+  do{
+     printf("Gostaria de listar vendas acima (1) ou abaixo (2) do valor inserido?\n");
+     scanf("%d", &op);
   switch (op)
   {
   case 1:
@@ -306,6 +307,8 @@ void ListaVendas(Arv *a, int valor)
     printf("Valor inválido!!!\n");
     break;
   }
+  }while(op != 1 && op != 2);
+ 
 }
 void imprimeVendasMaior(NoArv *raiz, int valor)
 {
@@ -342,7 +345,8 @@ void imprimeVendasMenor(NoArv *raiz, int valor)
 void exibirEstatisticas(Arv *a)
 {
   int num;
-  printf("Deseja ver das estatísticas do Sistema:\n");
+  do{
+    printf("Deseja ver das estatísticas do Sistema:\n");
   printf("1 - Numero total de Vendas\n");
   printf("2 - Total de faturamento\n");
   scanf("%d", &num);
@@ -358,6 +362,8 @@ void exibirEstatisticas(Arv *a)
     printf("Valor invalido!!!");
     break;
   }
+  }while(num != 1 && num != 2);
+  
 }
 void numeroTotalVendas(Arv *a)
 {
