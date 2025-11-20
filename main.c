@@ -6,7 +6,7 @@
 
 int main(){
   srand(time(NULL)); 
-  int op;
+  int op, num;
   Arv *a = inicializaarv();
   
   do{
@@ -21,8 +21,9 @@ int main(){
     printf("| %-60s |\n", " 6 - Remocao de uma Venda");
     printf("| %-60s |\n", " 7 - Sair");
     printf("+--------------------------------------------------------------+\n");
-    printf("Escolha sua opcao: ");
+    printf("\nEscolha sua opcao: ");
     scanf("%d", &op);
+    printf("\n");
 
     switch(op){
       case 1:
@@ -32,6 +33,9 @@ int main(){
         imprime_arv(a);
       break;
       case 3:
+        printf("Deseja Buscar as Vendas do Vendedor pelo nome (1) ou  pela matrícula(2)?\n");
+        scanf("%d", &num);
+        BuscarVendas(a, num);
       break;
       case 4:
       break;
