@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <string.h> 
+#include <string.h>
 
 typedef struct data
 {
@@ -67,11 +67,20 @@ void insere_arv(Arv *a);
 void imprime_sistema(NoArv *aux);
 void imprime_arv(Arv *a);
 void imprime_sistema(NoArv *aux);
-void BuscarVendas(Arv *a,int op);
+void BuscarVendas(Arv *a, int op);
 NoArv *busca_pelo_nome(NoArv *raiz, char nome_vendedor[49]);
 NoArv *busca_pela_matricula(NoArv *raiz, int matricula);
 void imprime_vendas_vendedor(NoArv *raiz);
-
+void ListaVendas(Arv *a, int valor);
+void imprimeVendasMaior(NoArv *raiz, int valor);
+void imprimeVendasMenor(NoArv *raiz, int valor);
+void exibirEstatisticas(Arv *a);
+void numeroTotalVendas(Arv *a);
+int numeroVendas(NoArv *raiz);
+void faturamentoTotal(Arv *a);
+float faturamento(NoArv *raiz);
+void removeVenda(Arv *a, int id);
+NoArv *remover(NoArv *raiz, int id);
 
 Arv *inicializaarv()
 {
@@ -175,7 +184,6 @@ void insere_arv(Arv *a)
   a->raiz = aux_insere(a->raiz, sis);
 }
 
-
 void imprime_arv(Arv *a)
 {
   imprime_sistema(a->raiz);
@@ -200,63 +208,258 @@ void imprime_sistema(NoArv *aux)
     imprime_sistema(aux->direita);
   }
 }
-void BuscarVendas(Arv *a, int op){
-  switch(op){
-    case 1:
-      NoArv *aux = NULL;
-      char nome[49];
-      printf("Nome do Vendedor: ");
-      scanf("%49s", nome);
-      aux = busca_pelo_nome(a->raiz, nome);
-      imprime_vendas_vendedor(aux);
+void BuscarVendas(Arv *a, int op)
+{
+  switch (op)
+  {
+  case 1:
+    NoArv *aux = NULL;
+    char nome[49];
+    printf("Nome do Vendedor: ");
+    scanf("%49s", nome);
+    aux = busca_pelo_nome(a->raiz, nome);
+    imprime_vendas_vendedor(aux);
     break;
-    case 2:
-      NoArv *aux2 = NULL;
-      int matricula;
-      printf("Digite a matricula do Vendedor: ");
-      scanf("%d", &matricula);
-      aux2 = busca_pela_matricula(a->raiz, matricula);
-      imprime_vendas_vendedor(aux2);
+  case 2:
+    NoArv *aux2 = NULL;
+    int matricula;
+    printf("Digite a matricula do Vendedor: ");
+    scanf("%d", &matricula);
+    aux2 = busca_pela_matricula(a->raiz, matricula);
+    imprime_vendas_vendedor(aux2);
     break;
   }
 }
-NoArv *busca_pelo_nome(NoArv *raiz, char nome_vendedor[49]){
-  if(raiz == NULL){
+NoArv *busca_pelo_nome(NoArv *raiz, char nome_vendedor[49])
+{
+  if (raiz == NULL)
+  {
     return NULL;
   }
-  if(strcmp(nome_vendedor, raiz->sistema.Vendedor) == 0){
+  if (strcmp(nome_vendedor, raiz->sistema.Vendedor) == 0)
+  {
     return raiz;
   }
 
   NoArv *p = busca_pelo_nome(raiz->esquerda, nome_vendedor);
-    if (p != NULL) {
-        return p;
-    }
-    return busca_pelo_nome(raiz->direita, nome_vendedor);
+  if (p != NULL)
+  {
+    return p;
+  }
+  return busca_pelo_nome(raiz->direita, nome_vendedor);
 }
-NoArv *busca_pela_matricula(NoArv *raiz, int matricula){
-  if(raiz == NULL){
+NoArv *busca_pela_matricula(NoArv *raiz, int matricula)
+{
+  if (raiz == NULL)
+  {
     return NULL;
   }
-  if(matricula == raiz->sistema.matricula_do_vendedor){
+  if (matricula == raiz->sistema.matricula_do_vendedor)
+  {
     return raiz;
   }
   NoArv *p = busca_pela_matricula(raiz->esquerda, matricula);
-    if (p != NULL) {
-        return p;
-    }
+  if (p != NULL)
+  {
+    return p;
+  }
 
-    return busca_pela_matricula(raiz->direita, matricula);
+  return busca_pela_matricula(raiz->direita, matricula);
 }
-void imprime_vendas_vendedor(NoArv *raiz){
-  if(raiz != NULL){
-     printf("ID: %d | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n"
-            , raiz->sistema.ID, raiz->sistema.Cliente, raiz->sistema.data_transacao
-            , raiz->sistema.valor_transacao);
-  } else {
+void imprime_vendas_vendedor(NoArv *raiz)
+{
+  if (raiz != NULL)
+  {
+    printf("ID: %d | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n",
+           raiz->sistema.ID,
+           raiz->sistema.Cliente,
+           raiz->sistema.data_transacao.dia,
+           raiz->sistema.data_transacao.mes,
+           raiz->sistema.data_transacao.ano,
+           raiz->sistema.valor_transacao);
+  }
+  else
+  {
     printf("Nenhuma venda encontrada.\n");
   }
-  
 }
+
+void ListaVendas(Arv *a, int valor)
+{
+
+  if (a == NULL || a->raiz == NULL)
+  {
+    printf("Sistema vazio! Erro");
+  }
+  int op;
+  printf("Gostaria de listar vendas acima (1) ou abaixo (2) do valor inserido?\n");
+  scanf("%d", &op);
+  switch (op)
+  {
+  case 1:
+    imprimeVendasMaior(a->raiz, valor);
+    break;
+  case 2:
+    imprimeVendasMenor(a->raiz, valor);
+    break;
+  default:
+    printf("Valor inválido!!!\n");
+    break;
+  }
+}
+void imprimeVendasMaior(NoArv *raiz, int valor)
+{
+  if (raiz != NULL)
+  {
+
+    imprimeVendasMaior(raiz->esquerda, valor);
+    if (raiz->sistema.valor_transacao > valor)
+    {
+      printf("ID: %d | Vendedor: %s | Matrícula: %d | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n", raiz->sistema.ID, raiz->sistema.Vendedor, raiz->sistema.matricula_do_vendedor,
+             raiz->sistema.Cliente, raiz->sistema.data_transacao.dia, raiz->sistema.data_transacao.mes, raiz->sistema.data_transacao.ano,
+             raiz->sistema.valor_transacao);
+    }
+
+    imprimeVendasMaior(raiz->direita, valor);
+  }
+}
+void imprimeVendasMenor(NoArv *raiz, int valor)
+{
+  if (raiz != NULL)
+  {
+
+    imprimeVendasMenor(raiz->esquerda, valor);
+
+    if (raiz->sistema.valor_transacao < valor)
+    {
+      printf("ID: %d | Vendedor: %s | Matrícula: %d | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n", raiz->sistema.ID, raiz->sistema.Vendedor, raiz->sistema.matricula_do_vendedor, raiz->sistema.Cliente, raiz->sistema.data_transacao.dia,
+             raiz->sistema.data_transacao.mes, raiz->sistema.data_transacao.ano, raiz->sistema.valor_transacao);
+    }
+
+    imprimeVendasMenor(raiz->direita, valor);
+  }
+}
+void exibirEstatisticas(Arv *a)
+{
+  int num;
+  printf("Deseja ver das estatísticas do Sistema:\n");
+  printf("1 - Numero total de Vendas\n");
+  printf("2 - Total de faturamento\n");
+  scanf("%d", &num);
+  switch (num)
+  {
+  case 1:
+    numeroTotalVendas(a);
+    break;
+  case 2:
+    faturamentoTotal(a);
+    break;
+  default:
+    printf("Valor invalido!!!");
+    break;
+  }
+}
+void numeroTotalVendas(Arv *a)
+{
+  int total = numeroVendas(a->raiz);
+  if (total == 0)
+  {
+    printf("\nNenhuma venda listada no Sistema\n");
+  }
+  else
+  {
+    printf("\nVendas Listadas no sistema: %d\n", total);
+  }
+}
+int numeroVendas(NoArv *raiz)
+{
+  if (raiz == NULL)
+  {
+    return 0;
+  }
+  return 1 + numeroVendas(raiz->esquerda) + numeroVendas(raiz->direita);
+}
+void faturamentoTotal(Arv *a)
+{
+  float f = faturamento(a->raiz);
+  if (f == 0)
+  {
+    printf("\nNenhum faturamento listado no Sistema\n");
+  }
+  else
+  {
+    printf("\nTotal de faturamento da empresa: %.2f\n", f);
+  }
+}
+float faturamento(NoArv *raiz)
+{
+  float soma = 0;
+  if (raiz == NULL)
+  {
+    return 0;
+  }
+  soma += raiz->sistema.valor_transacao;
+  return soma + faturamento(raiz->esquerda) + faturamento(raiz->direita);
+}
+
+void removeVenda(Arv *a, int id)
+{
+  a->raiz = remover(a->raiz, id);
+}
+
+NoArv *remover(NoArv *raiz, int id)
+{
+    if (raiz == NULL)
+    {
+        printf("\nID %d não encontrado\n", id);
+        return NULL;
+    }
+
+    if (id < raiz->sistema.ID)
+    {
+        raiz->esquerda = remover(raiz->esquerda, id);
+        return raiz;
+    }
+    else 
+      if (id > raiz->sistema.ID)
+        {
+        raiz->direita = remover(raiz->direita, id);
+        return raiz;
+        }
+
+    if (raiz->esquerda == NULL && raiz->direita == NULL)
+    {
+        free(raiz);
+        return NULL;
+    }
+
+    if (raiz->esquerda == NULL || raiz->direita == NULL)
+    {
+        NoArv *filho;
+
+        if (raiz->esquerda != NULL){
+          filho = raiz->esquerda;
+        } 
+        else{
+          filho = raiz->direita;
+        }
+  
+        free(raiz);
+        return filho;
+    }
+
+    NoArv *aux = raiz->esquerda;
+    while (aux->direita != NULL)
+    {
+        aux = aux->direita;
+    }
+
+    int id_aux = aux->sistema.ID;
+    raiz->sistema = aux->sistema;
+    raiz->esquerda = remover(raiz->esquerda, id_aux);
+
+    return raiz;
+}
+
 
 #endif
