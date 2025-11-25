@@ -24,6 +24,7 @@ int main(){
     printf("\nEscolha sua opcao: ");
     scanf("%d", &op);
     printf("\n");
+empty_stdin();
 
     switch(op){
       case 1:
@@ -56,7 +57,7 @@ int main(){
         LiberaArvore(a);
       break;
       default:
-        printf("Valor inválido!!!!");
+        printf("\n\n Valor inválido!!!!\n\n");
       break;
     }
   }while(op != 7);

@@ -32,6 +32,15 @@ typedef struct arv
 
 Sistema cadastro()
 {
+
+    struct tm *hoje;
+
+    time_t segundos;
+
+    time(&segundos);
+
+    hoje = localtime(&segundos);
+
   Sistema pessoa;
 
   printf("Digite o nome do Vendedor: ");
@@ -55,8 +64,21 @@ Sistema cadastro()
         &pessoa.data_transacao.dia,
         &pessoa.data_transacao.mes,
         &pessoa.data_transacao.ano);
-
+do {
+  printf("Digite a data da transacao (dd mm aaaa): ");
+  scanf("%d %d %d",
+        &pessoa.data_transacao.dia,
+        &pessoa.data_transacao.mes,
+        &pessoa.data_transacao.ano);
+  }while(pessoa.data_transacao.dia>31 || pessoa.data_transacao.dia <1 || pessoa.data_transacao.mes <1 || pessoa.data_transacao.mes>12 || pessoa.data_transacao.ano<1990 || pessoa.data_transacao.ano >hoje->tm_year+1900 || (pessoa.data_transacao.dia>hoje->tm_mday && pessoa.data_transacao.mes>=hoje->tm_mon+1 && pessoa.data_transacao.ano>hoje->tm_year+1900));
+  
+  
+  
   return pessoa;
+
+
+
+
 }
 
 Arv *inicializaarv();
@@ -81,6 +103,17 @@ void faturamentoTotal(Arv *a);
 float faturamento(NoArv *raiz);
 void removeVenda(Arv *a, int id);
 NoArv *remover(NoArv *raiz, int id);
+void empty_stdin (void);
+
+
+void empty_stdin (void)
+{
+    int c = getchar();
+
+    while (c != '\n' && c != EOF)
+        c = getchar();
+}
+
 
 Arv *inicializaarv()
 {
@@ -209,7 +242,7 @@ void imprime_sistema(NoArv *aux)
   }
 }
 void BuscarVendas(Arv *a, int op)
-{
+{ do{
   switch (op)
   {
   case 1:
@@ -232,6 +265,7 @@ void BuscarVendas(Arv *a, int op)
     printf("Valor inválido!!!\n");
   break;
   }
+}while(op != 1 && op != 2);
 }
 NoArv *busca_pelo_nome(NoArv *raiz, char nome_vendedor[49])
 {
