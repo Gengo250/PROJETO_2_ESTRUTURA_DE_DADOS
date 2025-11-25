@@ -228,6 +228,9 @@ void BuscarVendas(Arv *a, int op)
     aux2 = busca_pela_matricula(a->raiz, matricula);
     imprime_vendas_vendedor(aux2);
     break;
+  default:
+    printf("Valor inválido!!!\n");
+  break;
   }
 }
 NoArv *busca_pelo_nome(NoArv *raiz, char nome_vendedor[49])
@@ -347,9 +350,9 @@ void exibirEstatisticas(Arv *a)
   int num;
   do{
     printf("Deseja ver das estatísticas do Sistema:\n");
-  printf("1 - Numero total de Vendas\n");
-  printf("2 - Total de faturamento\n");
-  scanf("%d", &num);
+    printf("1 - Numero total de Vendas\n");
+    printf("2 - Total de faturamento\n");
+    scanf("%d", &num);
   switch (num)
   {
   case 1:
