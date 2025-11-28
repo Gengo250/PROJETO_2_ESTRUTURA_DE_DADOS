@@ -34,7 +34,7 @@ empty_stdin();
         imprime_arv(a);
       break;
       case 3:
-        printf("Deseja Buscar as Vendas do Vendedor pelo nome (1) ou  pela matrícula(2)?\n");
+        printf("Deseja Buscar as Vendas do Vendedor pelo nome (1) ou  pela matricula(2)?\n");
         scanf("%d", &num);
         BuscarVendas(a, num);
       break;

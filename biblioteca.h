@@ -14,7 +14,8 @@ typedef struct Sistema
   char Cliente[50];
   int ID;
   float valor_transacao;
-  int matricula_do_vendedor;
+  // MUDANÇA 1: De int para char array (string)
+  char matricula_do_vendedor[5];
   char Vendedor[50];
   Data data_transacao;
 } Sistema;
@@ -55,9 +56,11 @@ Sistema cadastro()
   pessoa.ID = 1000 + rand() % 9000;
   printf("ID da venda gerado: %d\n", pessoa.ID);
 
-  pessoa.matricula_do_vendedor = 100 + rand() % 900;
+  // MUDANÇA 2: Gera a string "V" + numero aleatorio
+  sprintf(pessoa.matricula_do_vendedor, "V%d", 100 + rand() % 900);
 
-  printf("Matrícula do vendedor: V%d\n", pessoa.matricula_do_vendedor);
+  // MUDANÇA 3: Printa como string (%s)
+  printf("Matricula do vendedor: %s\n", pessoa.matricula_do_vendedor);
 
   printf("Digite a data da transacao (dd mm aaaa): ");
   scanf("%d %d %d",
@@ -71,9 +74,9 @@ do {
         &pessoa.data_transacao.mes,
         &pessoa.data_transacao.ano);
   }while(pessoa.data_transacao.dia>31 || pessoa.data_transacao.dia <1 || pessoa.data_transacao.mes <1 || pessoa.data_transacao.mes>12 || pessoa.data_transacao.ano<1990 || pessoa.data_transacao.ano >hoje->tm_year+1900 || (pessoa.data_transacao.dia>hoje->tm_mday && pessoa.data_transacao.mes>=hoje->tm_mon+1 && pessoa.data_transacao.ano>hoje->tm_year+1900));
-  
-  
-  
+
+
+
   return pessoa;
 
 
@@ -91,7 +94,8 @@ void imprime_arv(Arv *a);
 void imprime_sistema(NoArv *aux);
 void BuscarVendas(Arv *a, int op);
 NoArv *busca_pelo_nome(NoArv *raiz, char nome_vendedor[49]);
-NoArv *busca_pela_matricula(NoArv *raiz, int matricula);
+// MUDANÇA 4: Atualiza protótipo para receber string
+NoArv *busca_pela_matricula(NoArv *raiz, char matricula[5]);
 void imprime_vendas_vendedor(NoArv *raiz);
 void ListaVendas(Arv *a, int valor);
 void imprimeVendasMaior(NoArv *raiz, int valor);
@@ -228,7 +232,8 @@ void imprime_sistema(NoArv *aux)
 
     imprime_sistema(aux->esquerda);
 
-    printf("ID: %d | Vendedor: %s | Matrícula: V%d | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n",
+    // MUDANÇA 5: %s na matrícula
+    printf("ID: %d | Vendedor: %s | Matricula: %s | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n",
            aux->sistema.ID,
            aux->sistema.Vendedor,
            aux->sistema.matricula_do_vendedor,
@@ -255,9 +260,10 @@ void BuscarVendas(Arv *a, int op)
     break;
   case 2:
     NoArv *aux2 = NULL;
-    int matricula;
+    // MUDANÇA 6: Ler string para matricula
+    char matricula[5];
     printf("Digite a matricula do Vendedor: ");
-    scanf("%d", &matricula);
+    scanf("%s", matricula);
     aux2 = busca_pela_matricula(a->raiz, matricula);
     imprime_vendas_vendedor(aux2);
     break;
@@ -285,13 +291,15 @@ NoArv *busca_pelo_nome(NoArv *raiz, char nome_vendedor[49])
   }
   return busca_pelo_nome(raiz->direita, nome_vendedor);
 }
-NoArv *busca_pela_matricula(NoArv *raiz, int matricula)
+
+// MUDANÇA 7: Recebe string e usa strcmp
+NoArv *busca_pela_matricula(NoArv *raiz, char matricula[5])
 {
   if (raiz == NULL)
   {
     return NULL;
   }
-  if (matricula == raiz->sistema.matricula_do_vendedor)
+  if (strcmp(matricula, raiz->sistema.matricula_do_vendedor) == 0)
   {
     return raiz;
   }
@@ -345,7 +353,7 @@ void ListaVendas(Arv *a, int valor)
     break;
   }
   }while(op != 1 && op != 2);
- 
+
 }
 void imprimeVendasMaior(NoArv *raiz, int valor)
 {
@@ -355,7 +363,8 @@ void imprimeVendasMaior(NoArv *raiz, int valor)
     imprimeVendasMaior(raiz->esquerda, valor);
     if (raiz->sistema.valor_transacao > valor)
     {
-      printf("ID: %d | Vendedor: %s | Matrícula: %d | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n", raiz->sistema.ID, raiz->sistema.Vendedor, raiz->sistema.matricula_do_vendedor,
+      // MUDANÇA 8: %s na matrícula
+      printf("ID: %d | Vendedor: %s | Matricula: %s | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n", raiz->sistema.ID, raiz->sistema.Vendedor, raiz->sistema.matricula_do_vendedor,
              raiz->sistema.Cliente, raiz->sistema.data_transacao.dia, raiz->sistema.data_transacao.mes, raiz->sistema.data_transacao.ano,
              raiz->sistema.valor_transacao);
     }
@@ -372,7 +381,8 @@ void imprimeVendasMenor(NoArv *raiz, int valor)
 
     if (raiz->sistema.valor_transacao < valor)
     {
-      printf("ID: %d | Vendedor: %s | Matrícula: %d | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n", raiz->sistema.ID, raiz->sistema.Vendedor, raiz->sistema.matricula_do_vendedor, raiz->sistema.Cliente, raiz->sistema.data_transacao.dia,
+      // MUDANÇA 9: %s na matrícula
+      printf("ID: %d | Vendedor: %s | Matricula: %s | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n", raiz->sistema.ID, raiz->sistema.Vendedor, raiz->sistema.matricula_do_vendedor, raiz->sistema.Cliente, raiz->sistema.data_transacao.dia,
              raiz->sistema.data_transacao.mes, raiz->sistema.data_transacao.ano, raiz->sistema.valor_transacao);
     }
 
@@ -400,7 +410,7 @@ void exibirEstatisticas(Arv *a)
     break;
   }
   }while(num != 1 && num != 2);
-  
+
 }
 void numeroTotalVendas(Arv *a)
 {
