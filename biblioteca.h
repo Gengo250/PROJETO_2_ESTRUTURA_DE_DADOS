@@ -14,7 +14,6 @@ typedef struct Sistema
   char Cliente[50];
   int ID;
   float valor_transacao;
-  // MUDANÇA 1: De int para char array (string)
   char matricula_do_vendedor[5];
   char Vendedor[50];
   Data data_transacao;
@@ -56,10 +55,8 @@ Sistema cadastro()
   pessoa.ID = 1000 + rand() % 9000;
   printf("ID da venda gerado: %d\n", pessoa.ID);
 
-  // MUDANÇA 2: Gera a string "V" + numero aleatorio
   sprintf(pessoa.matricula_do_vendedor, "V%d", 100 + rand() % 900);
 
-  // MUDANÇA 3: Printa como string (%s)
   printf("Matricula do vendedor: %s\n", pessoa.matricula_do_vendedor);
 
   printf("Digite a data da transacao (dd mm aaaa): ");
@@ -94,7 +91,6 @@ void imprime_arv(Arv *a);
 void imprime_sistema(NoArv *aux);
 void BuscarVendas(Arv *a, int op);
 NoArv *busca_pelo_nome(NoArv *raiz, char nome_vendedor[49]);
-// MUDANÇA 4: Atualiza protótipo para receber string
 NoArv *busca_pela_matricula(NoArv *raiz, char matricula[5]);
 void imprime_vendas_vendedor(NoArv *raiz);
 void ListaVendas(Arv *a, int valor);
@@ -232,7 +228,7 @@ void imprime_sistema(NoArv *aux)
 
     imprime_sistema(aux->esquerda);
 
-    // MUDANÇA 5: %s na matrícula
+
     printf("ID: %d | Vendedor: %s | Matricula: %s | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n",
            aux->sistema.ID,
            aux->sistema.Vendedor,
@@ -260,7 +256,6 @@ void BuscarVendas(Arv *a, int op)
     break;
   case 2:
     NoArv *aux2 = NULL;
-    // MUDANÇA 6: Ler string para matricula
     char matricula[5];
     printf("Digite a matricula do Vendedor: ");
     scanf("%s", matricula);
@@ -292,7 +287,6 @@ NoArv *busca_pelo_nome(NoArv *raiz, char nome_vendedor[49])
   return busca_pelo_nome(raiz->direita, nome_vendedor);
 }
 
-// MUDANÇA 7: Recebe string e usa strcmp
 NoArv *busca_pela_matricula(NoArv *raiz, char matricula[5])
 {
   if (raiz == NULL)
@@ -363,7 +357,6 @@ void imprimeVendasMaior(NoArv *raiz, int valor)
     imprimeVendasMaior(raiz->esquerda, valor);
     if (raiz->sistema.valor_transacao > valor)
     {
-      // MUDANÇA 8: %s na matrícula
       printf("ID: %d | Vendedor: %s | Matricula: %s | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n", raiz->sistema.ID, raiz->sistema.Vendedor, raiz->sistema.matricula_do_vendedor,
              raiz->sistema.Cliente, raiz->sistema.data_transacao.dia, raiz->sistema.data_transacao.mes, raiz->sistema.data_transacao.ano,
              raiz->sistema.valor_transacao);
@@ -381,7 +374,6 @@ void imprimeVendasMenor(NoArv *raiz, int valor)
 
     if (raiz->sistema.valor_transacao < valor)
     {
-      // MUDANÇA 9: %s na matrícula
       printf("ID: %d | Vendedor: %s | Matricula: %s | Cliente: %s | Data da Transacao: %02d/%02d/%04d | Valor($): %.2f\n", raiz->sistema.ID, raiz->sistema.Vendedor, raiz->sistema.matricula_do_vendedor, raiz->sistema.Cliente, raiz->sistema.data_transacao.dia,
              raiz->sistema.data_transacao.mes, raiz->sistema.data_transacao.ano, raiz->sistema.valor_transacao);
     }
